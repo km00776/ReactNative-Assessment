@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View, FlatList} from 'react-native'
 import { Linking} from 'react-native'
-import getApi from '/Users/km00776/Desktop/ReactProjects/TechnicalAssessment/api/demoAPI.js'
+import getApi from './api/demoAPI';
+
 
 export default class App extends Component {
   constructor(props) {
@@ -12,6 +13,9 @@ export default class App extends Component {
         dataSource: []
       }
   }
+  /**
+   * obtain data and place it in dataSource array
+   */
 
   async componentDidMount() {
     try {
@@ -23,7 +27,11 @@ export default class App extends Component {
       console.error(error);  
     }
   }
-
+  /**
+   * 
+   * if 'full_name' is clicked open the relative img 
+   *
+   */
   _renderItem = ({item , index}) => {
       return(
         <View style={styles.item}>
