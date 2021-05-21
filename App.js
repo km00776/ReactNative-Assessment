@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View, FlatList} from 'react-native'
-
+import { Linking} from 'react-native'
+import getApi from '/Users/km00776/Desktop/ReactProjects/TechnicalAssessment/api/demoAPI.js'
 
 export default class App extends Component {
   constructor(props) {
@@ -12,19 +13,21 @@ export default class App extends Component {
       }
   }
 
-  componentDidMount() {
-      fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY").then((response) => response.json()).then((responseJson) => {
+  async componentDidMount() {
+    try {
         this.setState({
-          isLoading: false,
-          dataSource: responseJson
+            dataSource: await getApi()
         })
-      })
+    }
+    catch(error) {
+      console.error(error);  
+    }
   }
 
   _renderItem = ({item , index}) => {
       return(
         <View style={styles.item}>
-          <Text>Hello</Text>
+          <Text onPress={() => { Linking.openURL(item['img_src'])}}>{item.camera['full_name']}</Text>
         </View>
       )
   }
@@ -57,3 +60,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee'
   }
 })
+
+
+
